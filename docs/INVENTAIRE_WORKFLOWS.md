@@ -71,18 +71,12 @@ Regle appliquee:
 ### Flux
 
 - `flux__base__img2img__ui__v01.json`
-- `flux__base__img2img__ui__v01__duplicate.json`
 - `flux__ghibli-lora__img2img__ui__v01.json`
-- `flux__ghibli-lora__img2img__ui__v01__duplicate.json`
 
 ### Video LTX 2.3
 
 - `ltx23__image-to-video__api__experimental__v01.json`
 - `ltx23__image-to-video__api__stable-fast-noaudio__v01.json`
-
-### Test technique isole
-
-- `zimage-turbo__pencil-sketch-lora__txt2img__ui__techpractice__v01.json`
 
 ## Classement fonctionnel
 
@@ -176,50 +170,12 @@ Recommendation:
 
 - garder `ltx23__image-to-video__api__stable-fast-noaudio__v01.json` comme version de production
 
-### 7. Test technique isole
-
-Fichier:
-
-- `zimage-turbo__pencil-sketch-lora__txt2img__ui__techpractice__v01.json`
-
-Interpretation:
-
-- workflow de test ou de tutoriel, separe des workflows Ghibli principaux
-
-## Doublons exacts detectes
-
-- `flux__base__img2img__ui__v01.json` = `flux__base__img2img__ui__v01__duplicate.json`
-- `flux__ghibli-lora__img2img__ui__v01.json` = `flux__ghibli-lora__img2img__ui__v01__duplicate.json`
-
 ## Scripts Python du dossier
 
 Ces fichiers ne sont pas des workflows, mais des outils d'automatisation autour de ComfyUI. Ils se trouvent maintenant dans `scripts/`:
 
 - `batch-img.py`: script batch image, configure par defaut pour `ghibli__wd14-combined__img2img__api__v01.json`
 - `batch-video.py`: script batch video, configure pour `ltx23__image-to-video__api__stable-fast-noaudio__v01.json`
-
-## Reorganisation conseillee du dossier
-
-Structure cible conseillee:
-
-```text
-comfyUiWorkflows/
-  docs/
-    INVENTAIRE_WORKFLOWS.md
-  ghibli/
-    simple/
-    wd14/
-    controlnet/
-  flux/
-    base/
-    lora/
-  video/
-    ltx23/
-  archive/
-    duplicates/
-    experiments/
-  scripts/
-```
 
 ## Tri minimal recommande
 
@@ -232,11 +188,6 @@ Base a garder en priorite:
 - `flux__ghibli-lora__img2img__ui__v01.json`
 - `ltx23__image-to-video__api__stable-fast-noaudio__v01.json`
 - `zimage-turbo__pencil-sketch-lora__txt2img__ui__techpractice__v01.json`
-
-A archiver si tu veux nettoyer vite:
-
-- `flux__base__img2img__ui__v01__duplicate.json`
-- `flux__ghibli-lora__img2img__ui__v01__duplicate.json`
 
 ## Conclusion
 
