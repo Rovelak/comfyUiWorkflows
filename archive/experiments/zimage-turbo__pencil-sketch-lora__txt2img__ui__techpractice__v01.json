@@ -1,4 +1,4 @@
-{
+﻿{
   "id": "9ae6082b-c7f4-433c-9971-7a8f65a3ea65",
   "revision": 0,
   "last_node_id": 50,
@@ -595,7 +595,7 @@
         "widget_ue_connectable": {}
       },
       "widgets_values": [
-        "## Video Tutorial\n\n[Video link](https://www.youtube.com/@tech-practice9805)\n\n## Model links\n\n**lora**\n\n- [Z Image Pencil Sketch](https://huggingface.co/Ttio2/Z-Image-Turbo-pencil-sketch)\n\n**text_encoders**\n\n- [qwen_3_4b.safetensors](https://huggingface.co/Comfy-Org/z_image_turbo/resolve/main/split_files/text_encoders/qwen_3_4b.safetensors)\n\n**diffusion_models**\n\n- [z_image_turbo_bf16.safetensors](https://huggingface.co/Comfy-Org/z_image_turbo/resolve/main/split_files/diffusion_models/z_image_turbo_bf16.safetensors)\n\n**vae**\n\n- [ae.safetensors](https://huggingface.co/Comfy-Org/z_image_turbo/resolve/main/split_files/vae/ae.safetensors)\n\n\nModel Storage Location\n\n```\n📂 ComfyUI/\n├── 📂 models/\n│   ├── 📂 lora/ \n│   │      └── Zimage_pencil_sketch.safetensors\n│   ├── 📂 text_encoders/\n│   │      └── qwen_3_4b.safetensors\n│   ├── 📂 diffusion_models/\n│   │      └── z_image_turbo_bf16.safetensors\n│   └── 📂 vae/\n│          └── ae.safetensors\n```\n\n"
+        "## Video Tutorial\n\n[Video link](https://www.youtube.com/@tech-practice9805)\n\n## Model links\n\n**lora**\n\n- [Z Image Pencil Sketch](https://huggingface.co/Ttio2/Z-Image-Turbo-pencil-sketch)\n\n**text_encoders**\n\n- [qwen_3_4b.safetensors](https://huggingface.co/Comfy-Org/z_image_turbo/resolve/main/split_files/text_encoders/qwen_3_4b.safetensors)\n\n**diffusion_models**\n\n- [z_image_turbo_bf16.safetensors](https://huggingface.co/Comfy-Org/z_image_turbo/resolve/main/split_files/diffusion_models/z_image_turbo_bf16.safetensors)\n\n**vae**\n\n- [ae.safetensors](https://huggingface.co/Comfy-Org/z_image_turbo/resolve/main/split_files/vae/ae.safetensors)\n\n\nModel Storage Location\n\n```\n­ƒôé ComfyUI/\nÔö£ÔöÇÔöÇ ­ƒôé models/\nÔöé   Ôö£ÔöÇÔöÇ ­ƒôé lora/ \nÔöé   Ôöé      ÔööÔöÇÔöÇ Zimage_pencil_sketch.safetensors\nÔöé   Ôö£ÔöÇÔöÇ ­ƒôé text_encoders/\nÔöé   Ôöé      ÔööÔöÇÔöÇ qwen_3_4b.safetensors\nÔöé   Ôö£ÔöÇÔöÇ ­ƒôé diffusion_models/\nÔöé   Ôöé      ÔööÔöÇÔöÇ z_image_turbo_bf16.safetensors\nÔöé   ÔööÔöÇÔöÇ ­ƒôé vae/\nÔöé          ÔööÔöÇÔöÇ ae.safetensors\n```\n\n"
       ],
       "color": "#432",
       "bgcolor": "#653"

@@ -16,7 +16,12 @@ from PIL import Image, ImageOps
 # Configuration
 # =========================
 COMFYUI_HOST = "127.0.0.1:8188"
-WORKFLOW_JSON = "workflow_api.json"
+WORKFLOW_JSON = (
+    Path(__file__).resolve().parent.parent
+    / "ghibli"
+    / "wd14"
+    / "ghibli__wd14-combined__img2img__api__v01.json"
+)
 
 INPUT_DIR = r"D:\Home\input_images"
 OUTPUT_DIR = r"D:\Home\batch_outputs"

@@ -16,7 +16,7 @@ COMFYUI_URL = "http://127.0.0.1:8188"
 
 COMFYUI_DIR = Path(r"D:\Home\ComfyUI_windows_portable\ComfyUI")
 
-WORKFLOW_PATH = Path(r"D:\Home\ComfyUI_windows_portable\ComfyUI\user\default\workflows\ltx-2.3 combi 1.1-wow.stable-fast.noaudio-export.json")
+WORKFLOW_PATH = Path(r"D:\Home\ComfyUI_windows_portable\ComfyUI\user\default\workflows\ltx23__image-to-video__api__stable-fast-noaudio__v01.json")
 
 INPUT_IMAGES_DIR = Path(r"D:\Home\images_a_animer")
 
