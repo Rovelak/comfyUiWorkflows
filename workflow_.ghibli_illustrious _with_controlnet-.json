@@ -1,0 +1,172 @@
+{
+  "1": {
+    "inputs": {
+      "ckpt_name": "studioChatgptGhibli_v10.safetensors"
+    },
+    "class_type": "CheckpointLoaderSimple",
+    "_meta": {
+      "title": "Load Checkpoint"
+    }
+  },
+  "2": {
+    "inputs": {
+      "image": "input.png",
+      "upload": "image"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "Load Image"
+    }
+  },
+  "3": {
+    "inputs": {
+      "text": "tender family scene, father and mother holding a baby, intimate quiet moment, seated together on a bed, soft hand-painted anime illustration, warm natural indoor light, gentle watercolor shading, delicate facial features, subtle and natural eyes, calm loving expressions, faithful to the original composition, preserve pose, preserve framing, preserve hand placement, preserve anatomy, studio ghibli inspired, clean shapes, warm colors",
+      "clip": [
+        "1",
+        1
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "Positive Prompt"
+    }
+  },
+  "4": {
+    "inputs": {
+      "text": "deformed face, asymmetrical eyes, malformed eyes, empty eyes, crossed eyes, distorted baby, unclear baby face, fused hands, extra fingers, broken anatomy, duplicate features, uncanny expression, warped mouth, muddy details, oversmoothed face, overpainted face, photorealistic, 3d, cgi, render, text, watermark, logo",
+      "clip": [
+        "1",
+        1
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "Negative Prompt"
+    }
+  },
+  "5": {
+    "inputs": {
+      "pixels": [
+        "2",
+        0
+      ],
+      "vae": [
+        "1",
+        2
+      ]
+    },
+    "class_type": "VAEEncode",
+    "_meta": {
+      "title": "VAE Encode"
+    }
+  },
+  "6": {
+    "inputs": {
+      "low_threshold": 100,
+      "high_threshold": 200,
+      "image": [
+        "2",
+        0
+      ]
+    },
+    "class_type": "Canny",
+    "_meta": {
+      "title": "Canny"
+    }
+  },
+  "7": {
+    "inputs": {
+      "control_net_name": "controlnet-canny-sdxl.safetensors"
+    },
+    "class_type": "ControlNetLoader",
+    "_meta": {
+      "title": "Load ControlNet"
+    }
+  },
+  "8": {
+    "inputs": {
+      "positive": [
+        "3",
+        0
+      ],
+      "negative": [
+        "4",
+        0
+      ],
+      "control_net": [
+        "7",
+        0
+      ],
+      "image": [
+        "6",
+        0
+      ],
+      "strength": 0.45,
+      "start_percent": 0.0,
+      "end_percent": 0.75
+    },
+    "class_type": "ControlNetApplyAdvanced",
+    "_meta": {
+      "title": "Apply ControlNet"
+    }
+  },
+  "9": {
+    "inputs": {
+      "seed": 123456789,
+      "steps": 30,
+      "cfg": 5.0,
+      "sampler_name": "euler_ancestral",
+      "scheduler": "normal",
+      "denoise": 0.24,
+      "model": [
+        "1",
+        0
+      ],
+      "positive": [
+        "8",
+        0
+      ],
+      "negative": [
+        "8",
+        1
+      ],
+      "latent_image": [
+        "5",
+        0
+      ]
+    },
+    "class_type": "KSampler",
+    "_meta": {
+      "title": "KSampler Img2Img"
+    }
+  },
+  "10": {
+    "inputs": {
+      "samples": [
+        "9",
+        0
+      ],
+      "vae": [
+        "1",
+        2
+      ]
+    },
+    "class_type": "VAEDecode",
+    "_meta": {
+      "title": "VAE Decode"
+    }
+  },
+  "11": {
+    "inputs": {
+      "filename_prefix": "ghibli_img2img_controlnet",
+      "images": [
+        "10",
+        0
+      ]
+    },
+    "class_type": "SaveImage",
+    "_meta": {
+      "title": "Save Image"
+    }
+  }
+}

@@ -1,0 +1,195 @@
+{
+  "1": {
+    "inputs": {
+      "ckpt_name": "studioChatgptGhibli_v10.safetensors"
+    },
+    "class_type": "CheckpointLoaderSimple",
+    "_meta": {
+      "title": "Load Checkpoint"
+    }
+  },
+  "2": {
+    "inputs": {
+      "image": "1496215_466402690148289_1152759697_o.jpg"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "Load Image"
+    }
+  },
+  "3": {
+    "inputs": {
+      "model": "wd-v1-4-moat-tagger-v2",
+      "threshold": 0.35,
+      "character_threshold": 0.85,
+      "replace_underscore": false,
+      "trailing_comma": false,
+      "exclude_tags": "realistic, photorealistic, 3d, monochrome, greyscale, closed_mouth, expressionless, sad, serious, gloomy, melancholy",
+      "image": [
+        "2",
+        0
+      ]
+    },
+    "class_type": "WD14Tagger|pysssss",
+    "_meta": {
+      "title": "WD14 Tagger"
+    }
+  },
+  "4": {
+    "inputs": {
+      "width": 1024,
+      "height": 1024,
+      "crop_w": 0,
+      "crop_h": 0,
+      "target_width": 1024,
+      "target_height": 1024,
+      "text_g": [
+        "3",
+        0
+      ],
+      "text_l": [
+        "3",
+        0
+      ],
+      "clip": [
+        "1",
+        1
+      ]
+    },
+    "class_type": "CLIPTextEncodeSDXL",
+    "_meta": {
+      "title": "Encode WD14 Tags"
+    }
+  },
+  "5": {
+    "inputs": {
+      "width": 1024,
+      "height": 1024,
+      "crop_w": 0,
+      "crop_h": 0,
+      "target_width": 1024,
+      "target_height": 1024,
+      "text_g": "studio ghibli style, anime illustration, soft painterly shading, warm colors, gentle facial features, cheerful expression, bright eyes, natural smile, friendly expression, cozy atmosphere, clean linework, portrait, high quality",
+      "text_l": "studio ghibli style, anime illustration, soft painterly shading, warm colors, gentle facial features, cheerful expression, bright eyes, natural smile, friendly expression, cozy atmosphere, clean linework, portrait, high quality",
+      "clip": [
+        "1",
+        1
+      ]
+    },
+    "class_type": "CLIPTextEncodeSDXL",
+    "_meta": {
+      "title": "Encode Manual Positive"
+    }
+  },
+  "6": {
+    "inputs": {
+      "conditioning_1": [
+        "4",
+        0
+      ],
+      "conditioning_2": [
+        "5",
+        0
+      ]
+    },
+    "class_type": "ConditioningCombine",
+    "_meta": {
+      "title": "Combine Positive Conditioning"
+    }
+  },
+  "7": {
+    "inputs": {
+      "width": 1024,
+      "height": 1024,
+      "crop_w": 0,
+      "crop_h": 0,
+      "target_width": 1024,
+      "target_height": 1024,
+      "text_g": "photorealistic, realistic, ugly, deformed, bad anatomy, bad hands, extra fingers, cross-eyed, asymmetrical eyes, malformed teeth, oversharpened, harsh shadows, noisy skin, watermark, text, logo, sad, gloomy, melancholy, angry, stern, serious, frowning, expressionless, blank stare, emotionless",
+      "text_l": "photorealistic, realistic, ugly, deformed, bad anatomy, bad hands, extra fingers, cross-eyed, asymmetrical eyes, malformed teeth, oversharpened, harsh shadows, noisy skin, watermark, text, logo, sad, gloomy, melancholy, angry, stern, serious, frowning, expressionless, blank stare, emotionless",
+      "clip": [
+        "1",
+        1
+      ]
+    },
+    "class_type": "CLIPTextEncodeSDXL",
+    "_meta": {
+      "title": "Encode Negative"
+    }
+  },
+  "8": {
+    "inputs": {
+      "pixels": [
+        "2",
+        0
+      ],
+      "vae": [
+        "1",
+        2
+      ]
+    },
+    "class_type": "VAEEncode",
+    "_meta": {
+      "title": "VAE Encode"
+    }
+  },
+  "9": {
+    "inputs": {
+      "seed": 382710159431657,
+      "steps": 30,
+      "cfg": 5.0,
+      "sampler_name": "dpmpp_2m_sde_gpu",
+      "scheduler": "karras",
+      "denoise": 0.38,
+      "model": [
+        "1",
+        0
+      ],
+      "positive": [
+        "6",
+        0
+      ],
+      "negative": [
+        "7",
+        0
+      ],
+      "latent_image": [
+        "8",
+        0
+      ]
+    },
+    "class_type": "KSampler",
+    "_meta": {
+      "title": "KSampler"
+    }
+  },
+  "10": {
+    "inputs": {
+      "samples": [
+        "9",
+        0
+      ],
+      "vae": [
+        "1",
+        2
+      ]
+    },
+    "class_type": "VAEDecode",
+    "_meta": {
+      "title": "VAE Decode"
+    }
+  },
+  "11": {
+    "inputs": {
+      "filename_prefix": "img2img_ghibli_wd14_combo",
+      "images": [
+        "10",
+        0
+      ]
+    },
+    "class_type": "SaveImage",
+    "_meta": {
+      "title": "Save Image"
+    }
+  }
+}
