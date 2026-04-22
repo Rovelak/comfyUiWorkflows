@@ -29,6 +29,8 @@ comfyUiWorkflows/
   flux/
     base/
     lora/
+  sdxl/
+    lora/
   video/
     ltx23/
   archive/
@@ -72,6 +74,10 @@ Regle appliquee:
 
 - `flux__base__img2img__ui__v01.json`
 - `flux__ghibli-lora__img2img__ui__v01.json`
+
+### SDXL + LoRA
+
+- `sdxl__generic-lora__img2img__ui__v01.json`
 
 ### Video LTX 2.3
 
@@ -170,6 +176,21 @@ Recommendation:
 
 - garder `ltx23__image-to-video__api__stable-fast-noaudio__v01.json` comme version de production
 
+### 7. SDXL + LoRA
+
+But: base generique prete a l'emploi pour faire de l'img2img avec un checkpoint SDXL et un LoRA SDXL a renseigner manuellement.
+
+Fichiers:
+
+- `sdxl__generic-lora__img2img__ui__v01.json`
+
+Details:
+
+- workflow UI SDXL avec `CheckpointLoaderSimple` + `LoraLoader` + `CLIPTextEncodeSDXL` + `ControlNetApplyAdvanced`
+- prevu pour remplacer rapidement le checkpoint, le fichier LoRA et le modele ControlNet sans rebrancher les noeuds
+- denoise par defaut a `0.35`, adapte a de l'img2img de stylisation/modification moderee
+- Canny + ControlNet SDXL ajoutes pour mieux conserver la composition de l'image source
+
 ## Scripts Python du dossier
 
 Ces fichiers ne sont pas des workflows, mais des outils d'automatisation autour de ComfyUI. Ils se trouvent maintenant dans `scripts/`:
@@ -186,6 +207,7 @@ Base a garder en priorite:
 - `ghibli__illustrious-controlnet-canny__img2img__ui__v01.json`
 - `flux__base__img2img__ui__v01.json`
 - `flux__ghibli-lora__img2img__ui__v01.json`
+- `sdxl__generic-lora__img2img__ui__v01.json`
 - `ltx23__image-to-video__api__stable-fast-noaudio__v01.json`
 - `zimage-turbo__pencil-sketch-lora__txt2img__ui__techpractice__v01.json`
 

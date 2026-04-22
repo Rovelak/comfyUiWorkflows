@@ -1,0 +1,438 @@
+{
+  "last_node_id": 12,
+  "last_link_id": 18,
+  "version": 0.4,
+  "nodes": [
+    {
+      "id": 1,
+      "type": "CheckpointLoaderSimple",
+      "pos": [80, 110],
+      "size": [320, 110],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [1]
+        },
+        {
+          "name": "CLIP",
+          "type": "CLIP",
+          "links": [2]
+        },
+        {
+          "name": "VAE",
+          "type": "VAE",
+          "links": [7, 12]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CheckpointLoaderSimple"
+      },
+      "widgets_values": ["put_your_sdxl_checkpoint_here.safetensors"]
+    },
+    {
+      "id": 2,
+      "type": "LoraLoader",
+      "pos": [450, 110],
+      "size": [320, 126],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 1
+        },
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 2
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [3]
+        },
+        {
+          "name": "CLIP",
+          "type": "CLIP",
+          "links": [4, 5]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoraLoader"
+      },
+      "widgets_values": ["put_your_sdxl_lora_here.safetensors", 0.8, 1.0]
+    },
+    {
+      "id": 3,
+      "type": "LoadImage",
+      "pos": [80, 320],
+      "size": [315, 260],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [6, 14]
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadImage"
+      },
+      "widgets_values": ["example.png", "image"]
+    },
+    {
+      "id": 4,
+      "type": "CLIPTextEncodeSDXL",
+      "pos": [840, 80],
+      "size": [300, 230],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 4
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [8]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CLIPTextEncodeSDXL"
+      },
+      "widgets_values": [
+        1024,
+        1024,
+        0,
+        0,
+        1024,
+        1024,
+        "your subject, style cues, composition, high quality, detailed",
+        "your subject, style cues, composition, high quality, detailed"
+      ]
+    },
+    {
+      "id": 5,
+      "type": "CLIPTextEncodeSDXL",
+      "pos": [840, 360],
+      "size": [300, 230],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 5
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [9]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CLIPTextEncodeSDXL"
+      },
+      "widgets_values": [
+        1024,
+        1024,
+        0,
+        0,
+        1024,
+        1024,
+        "low quality, blurry, deformed, bad anatomy, extra fingers, watermark, text, logo",
+        "low quality, blurry, deformed, bad anatomy, extra fingers, watermark, text, logo"
+      ]
+    },
+    {
+      "id": 6,
+      "type": "VAEEncode",
+      "pos": [450, 430],
+      "size": [210, 80],
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "pixels",
+          "type": "IMAGE",
+          "link": 6
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 7
+        }
+      ],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [10]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VAEEncode"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 7,
+      "type": "KSampler",
+      "pos": [1180, 130],
+      "size": [315, 260],
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 3
+        },
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 17
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 18
+        },
+        {
+          "name": "latent_image",
+          "type": "LATENT",
+          "link": 10
+        }
+      ],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [11]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "KSampler"
+      },
+      "widgets_values": [
+        123456789,
+        "randomize",
+        28,
+        5,
+        "dpmpp_2m_sde_gpu",
+        "karras",
+        0.35
+      ]
+    },
+    {
+      "id": 8,
+      "type": "VAEDecode",
+      "pos": [1190, 450],
+      "size": [210, 80],
+      "flags": {},
+      "order": 7,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "samples",
+          "type": "LATENT",
+          "link": 11
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 12
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [13]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VAEDecode"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 9,
+      "type": "SaveImage",
+      "pos": [1490, 130],
+      "size": [300, 230],
+      "flags": {},
+      "order": 8,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 13
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "SaveImage"
+      },
+      "widgets_values": ["sdxl_lora_img2img_controlnet"]
+    },
+    {
+      "id": 10,
+      "type": "Canny",
+      "pos": [450, 600],
+      "size": [270, 82],
+      "flags": {},
+      "order": 9,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 14
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [16]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "Canny"
+      },
+      "widgets_values": [0.4, 0.8]
+    },
+    {
+      "id": 11,
+      "type": "ControlNetLoader",
+      "pos": [840, 620],
+      "size": [300, 58],
+      "flags": {},
+      "order": 10,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "CONTROL_NET",
+          "type": "CONTROL_NET",
+          "links": [15]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ControlNetLoader"
+      },
+      "widgets_values": ["xinsir-controlnet-canny-sdxl-1.0.safetensors"]
+    },
+    {
+      "id": 12,
+      "type": "ControlNetApplyAdvanced",
+      "pos": [1180, 520],
+      "size": [270, 186],
+      "flags": {},
+      "order": 11,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 8
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 9
+        },
+        {
+          "name": "control_net",
+          "type": "CONTROL_NET",
+          "link": 15
+        },
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 16
+        },
+        {
+          "name": "vae",
+          "shape": 7,
+          "type": "VAE",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "links": [17]
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "links": [18]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ControlNetApplyAdvanced"
+      },
+      "widgets_values": [0.45, 0, 0.8]
+    }
+  ],
+  "links": [
+    [1, 1, 0, 2, 0, "MODEL"],
+    [2, 1, 1, 2, 1, "CLIP"],
+    [3, 2, 0, 7, 0, "MODEL"],
+    [4, 2, 1, 4, 0, "CLIP"],
+    [5, 2, 1, 5, 0, "CLIP"],
+    [6, 3, 0, 6, 0, "IMAGE"],
+    [7, 1, 2, 6, 1, "VAE"],
+    [8, 4, 0, 7, 1, "CONDITIONING"],
+    [9, 5, 0, 7, 2, "CONDITIONING"],
+    [10, 6, 0, 7, 3, "LATENT"],
+    [11, 7, 0, 8, 0, "LATENT"],
+    [12, 1, 2, 8, 1, "VAE"],
+    [13, 8, 0, 9, 0, "IMAGE"],
+    [14, 3, 0, 10, 0, "IMAGE"],
+    [15, 11, 0, 12, 2, "CONTROL_NET"],
+    [16, 10, 0, 12, 3, "IMAGE"],
+    [17, 12, 0, 7, 1, "CONDITIONING"],
+    [18, 12, 1, 7, 2, "CONDITIONING"]
+  ],
+  "groups": [],
+  "config": {},
+  "extra": {
+    "ds": {
+      "scale": 0.9,
+      "offset": [0, 0]
+    },
+    "ue_links": []
+  }
+}
