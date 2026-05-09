@@ -18,7 +18,7 @@ COMFYUI_HOST = "127.0.0.1:8188"
 WORKFLOW_JSON = (
     Path(__file__).resolve().parent.parent
     / "flux2 klein"
-    / "base-api.json"
+    / "base-flat-api.json"
 )
 
 INPUT_DIR = r"D:\Home\input_images"

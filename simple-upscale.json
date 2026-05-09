@@ -1,0 +1,203 @@
+{
+  "id": "4e309695-fba3-4975-bf86-4f2852d5ba96",
+  "revision": 0,
+  "last_node_id": 22,
+  "last_link_id": 31,
+  "nodes": [
+    {
+      "id": 17,
+      "type": "SaveImage",
+      "pos": [
+        2884.4732005617616,
+        -36.15720788581603
+      ],
+      "size": [
+        314.48046875,
+        270
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 23
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.18.2",
+        "Node name for S&R": "SaveImage"
+      },
+      "widgets_values": [
+        "flux2_klein_4mp_"
+      ]
+    },
+    {
+      "id": 18,
+      "type": "ImageUpscaleWithModel",
+      "pos": [
+        2539.119659872804,
+        -28.934969913031715
+      ],
+      "size": [
+        284.3599609375,
+        46
+      ],
+      "flags": {
+        "collapsed": false
+      },
+      "order": 2,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "upscale_model",
+          "type": "UPSCALE_MODEL",
+          "link": 24
+        },
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 31
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            23
+          ]
+        }
+      ],
+      "title": "Final Upscale",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.43",
+        "Node name for S&R": "ImageUpscaleWithModel"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 19,
+      "type": "UpscaleModelLoader",
+      "pos": [
+        2192.1517628139136,
+        -93.91723288895508
+      ],
+      "size": [
+        288.1744140625,
+        58
+      ],
+      "flags": {
+        "collapsed": false
+      },
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "UPSCALE_MODEL",
+          "type": "UPSCALE_MODEL",
+          "links": [
+            24
+          ]
+        }
+      ],
+      "title": "Upscale Model",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.43",
+        "Node name for S&R": "UpscaleModelLoader"
+      },
+      "widgets_values": [
+        "4x-AnimeSharp.pth"
+      ]
+    },
+    {
+      "id": 21,
+      "type": "LoadImage",
+      "pos": [
+        2134.5200912836513,
+        51.46701279461269
+      ],
+      "size": [
+        353.85546875,
+        314.0000000000001
+      ],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            31
+          ]
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": null
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.18.2",
+        "Node name for S&R": "LoadImage"
+      },
+      "widgets_values": [
+        "11951_516227408499150_1156623409278495820_n_klein_v01_1MB.png",
+        "image"
+      ]
+    }
+  ],
+  "links": [
+    [
+      23,
+      18,
+      0,
+      17,
+      0,
+      "IMAGE"
+    ],
+    [
+      24,
+      19,
+      0,
+      18,
+      0,
+      "UPSCALE_MODEL"
+    ],
+    [
+      31,
+      21,
+      0,
+      18,
+      1,
+      "IMAGE"
+    ]
+  ],
+  "groups": [],
+  "config": {},
+  "extra": {
+    "ue_links": [],
+    "ds": {
+      "scale": 0.7627768444385519,
+      "offset": [
+        -1935.8180191543736,
+        359.25710969826326
+      ]
+    },
+    "frontendVersion": "1.41.21",
+    "VHS_latentpreview": false,
+    "VHS_latentpreviewrate": 0,
+    "VHS_MetadataImage": true,
+    "VHS_KeepIntermediate": true
+  },
+  "version": 0.4
+}
