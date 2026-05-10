@@ -357,7 +357,7 @@ def process_variant(image_path, comfy_name, workflow_template, variant_index):
     output_prefix = f"batch_ltx23/{output_stem}"
 
     seed = random.randint(1, 10_000_000)
-    strength = round(random.uniform(0.52, 0.68), 3)
+    strength = round(random.uniform(0.5, 0.62), 3)
 
     prompt = POSITIVE_PROMPT + " " + random.choice(PROMPT_VARIANTS)
 

@@ -159,18 +159,6 @@
       "title": "Power Lora Loader (rgthree)"
     }
   },
-  "218": {
-    "inputs": {
-      "any_03": [
-        "209:127",
-        0
-      ]
-    },
-    "class_type": "Any Switch (rgthree)",
-    "_meta": {
-      "title": "Any Switch audio"
-    }
-  },
   "366": {
     "inputs": {
       "unet_name": "ltx-2.3-22b-dev-Q4_K_M.gguf"
@@ -204,7 +192,7 @@
   },
   "209:164": {
     "inputs": {
-      "sigmas": "1., 0.99375, 0.9875, 0.98125, 0.975, 0.909375, 0.725, 0.421875, 0.0"
+      "sigmas": "1., 0.995, 0.99, 0.985, 0.98, 0.975, 0.909375, 0.725, 0.421875, 0.18, 0.0"
     },
     "class_type": "ManualSigmas",
     "_meta": {
@@ -213,7 +201,7 @@
   },
   "209:100": {
     "inputs": {
-      "sigmas": "0.8025, 0.6332, 0.3425, 0.0"
+      "sigmas": "0.8025, 0.6332, 0.3425, 0.12, 0.0"
     },
     "class_type": "ManualSigmas",
     "_meta": {
@@ -231,7 +219,10 @@
   },
   "209:211": {
     "inputs": {
-      "longer_edge": 896,
+      "longer_edge": [
+        "199",
+        0
+      ],
       "images": [
         "149",
         0
@@ -669,22 +660,6 @@
     "class_type": "VAEDecodeTiled",
     "_meta": {
       "title": "VAE Decode (Tiled)"
-    }
-  },
-  "209:127": {
-    "inputs": {
-      "samples": [
-        "209:124",
-        1
-      ],
-      "audio_vae": [
-        "175",
-        0
-      ]
-    },
-    "class_type": "LTXVAudioVAEDecode",
-    "_meta": {
-      "title": "Décodage Audio VAE LTXV"
     }
   }
 }
