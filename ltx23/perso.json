@@ -129,19 +129,6 @@
       "title": "Image Resize by Longer Side"
     }
   },
-  "210": {
-    "inputs": {
-      "filename_prefix": "ComfyUI",
-      "images": [
-        "219",
-        0
-      ]
-    },
-    "class_type": "SaveImage",
-    "_meta": {
-      "title": "Save Last Frame Image"
-    }
-  },
   "211": {
     "inputs": {
       "PowerLoraLoaderHeaderWidget": {
@@ -172,18 +159,6 @@
       "title": "Power Lora Loader (rgthree)"
     }
   },
-  "217": {
-    "inputs": {
-      "any_03": [
-        "209:126",
-        0
-      ]
-    },
-    "class_type": "Any Switch (rgthree)",
-    "_meta": {
-      "title": "Any Switch image"
-    }
-  },
   "218": {
     "inputs": {
       "any_03": [
@@ -194,18 +169,6 @@
     "class_type": "Any Switch (rgthree)",
     "_meta": {
       "title": "Any Switch audio"
-    }
-  },
-  "219": {
-    "inputs": {
-      "any_03": [
-        "209:218",
-        0
-      ]
-    },
-    "class_type": "Any Switch (rgthree)",
-    "_meta": {
-      "title": "Any Switch last frame"
     }
   },
   "366": {
@@ -239,44 +202,6 @@
       "title": "CLIP Text Encode (Prompt) negative"
     }
   },
-  "611": {
-    "inputs": {
-      "style_model_name": "flux1-redux-dev.safetensors"
-    },
-    "class_type": "StyleModelLoader",
-    "_meta": {
-      "title": "Charger le modèle de style"
-    }
-  },
-  "612": {
-    "inputs": {
-      "clip_name": "sigclip_vision_patch14_384.safetensors"
-    },
-    "class_type": "CLIPVisionLoader",
-    "_meta": {
-      "title": "Charger CLIP Vision"
-    }
-  },
-  "613": {
-    "inputs": {
-      "unet_name": "IllustrationJuanerGhibli_v20.safetensors",
-      "weight_dtype": "default"
-    },
-    "class_type": "UNETLoader",
-    "_meta": {
-      "title": "Charger Modèle Diffusion"
-    }
-  },
-  "614": {
-    "inputs": {
-      "unet_name": "IllustrationJuanerGhibli_v20.safetensors",
-      "weight_dtype": "default"
-    },
-    "class_type": "UNETLoader",
-    "_meta": {
-      "title": "Charger Modèle Diffusion"
-    }
-  },
   "209:164": {
     "inputs": {
       "sigmas": "1., 0.99375, 0.9875, 0.98125, 0.975, 0.909375, 0.725, 0.421875, 0.0"
@@ -295,43 +220,251 @@
       "title": "Sigmas manuels"
     }
   },
-  "209:119": {
+  "209:136": {
     "inputs": {
-      "noise": [
-        "115",
-        0
-      ],
-      "guider": [
-        "209:103",
-        0
-      ],
-      "sampler": [
-        "209:136",
-        0
-      ],
-      "sigmas": [
-        "209:100",
-        0
-      ],
-      "latent_image": [
-        "209:117",
+      "sampler_name": "euler_ancestral"
+    },
+    "class_type": "KSamplerSelect",
+    "_meta": {
+      "title": "KSamplerSelect"
+    }
+  },
+  "209:211": {
+    "inputs": {
+      "longer_edge": 896,
+      "images": [
+        "149",
         0
       ]
     },
-    "class_type": "SamplerCustomAdvanced",
+    "class_type": "ResizeImagesByLongerEdge",
     "_meta": {
-      "title": "ÉchantillonneurPersonnaliséAvancé"
+      "title": "Redimensionner les images par le bord le plus long"
     }
   },
-  "209:117": {
+  "209:210": {
+    "inputs": {
+      "expression": "a*24+1",
+      "a": [
+        "196",
+        0
+      ]
+    },
+    "class_type": "MathExpression|pysssss",
+    "_meta": {
+      "title": "Math Expression 🐍"
+    }
+  },
+  "209:207": {
+    "inputs": {
+      "longer_edge": [
+        "199",
+        0
+      ],
+      "images": [
+        "149",
+        0
+      ]
+    },
+    "class_type": "ResizeImagesByLongerEdge",
+    "_meta": {
+      "title": "Redimensionner les images par le bord le plus long"
+    }
+  },
+  "209:201": {
+    "inputs": {
+      "frame_rate": 24,
+      "positive": [
+        "121",
+        0
+      ],
+      "negative": [
+        "593",
+        0
+      ]
+    },
+    "class_type": "LTXVConditioning",
+    "_meta": {
+      "title": "LTXVConditioning"
+    }
+  },
+  "209:212": {
+    "inputs": {
+      "img_compression": 0,
+      "image": [
+        "209:211",
+        0
+      ]
+    },
+    "class_type": "LTXVPreprocess",
+    "_meta": {
+      "title": "LTXVPreprocess"
+    }
+  },
+  "209:214": {
+    "inputs": {
+      "frames_number": [
+        "209:210",
+        0
+      ],
+      "frame_rate": 24,
+      "batch_size": 1,
+      "audio_vae": [
+        "175",
+        0
+      ]
+    },
+    "class_type": "LTXVEmptyLatentAudio",
+    "_meta": {
+      "title": "Audio latent vide LTXV"
+    }
+  },
+  "209:208": {
+    "inputs": {
+      "image": [
+        "209:207",
+        0
+      ]
+    },
+    "class_type": "GetImageSize",
+    "_meta": {
+      "title": "Obtenir la taille de l'image"
+    }
+  },
+  "209:601": {
+    "inputs": {
+      "preview_rate": 8,
+      "model": [
+        "211",
+        0
+      ],
+      "vae": [
+        "591",
+        0
+      ]
+    },
+    "class_type": "LTX2SamplingPreviewOverride",
+    "_meta": {
+      "title": "LTX2 Sampling Preview Override"
+    }
+  },
+  "209:209": {
+    "inputs": {
+      "width": [
+        "209:208",
+        0
+      ],
+      "height": [
+        "209:208",
+        1
+      ],
+      "batch_size": 1,
+      "color": 0
+    },
+    "class_type": "EmptyImage",
+    "_meta": {
+      "title": "ImageVide"
+    }
+  },
+  "209:128": {
+    "inputs": {
+      "cfg": 1,
+      "model": [
+        "209:601",
+        0
+      ],
+      "positive": [
+        "209:201",
+        0
+      ],
+      "negative": [
+        "209:201",
+        1
+      ]
+    },
+    "class_type": "CFGGuider",
+    "_meta": {
+      "title": "GuideCFG"
+    }
+  },
+  "209:205": {
+    "inputs": {
+      "upscale_method": "lanczos",
+      "scale_by": 0.5,
+      "image": [
+        "209:209",
+        0
+      ]
+    },
+    "class_type": "ImageScaleBy",
+    "_meta": {
+      "title": "Agrandir l'image par"
+    }
+  },
+  "209:206": {
+    "inputs": {
+      "image": [
+        "209:205",
+        0
+      ]
+    },
+    "class_type": "GetImageSize",
+    "_meta": {
+      "title": "Obtenir la taille de l'image"
+    }
+  },
+  "209:204": {
+    "inputs": {
+      "width": [
+        "209:206",
+        0
+      ],
+      "height": [
+        "209:206",
+        1
+      ],
+      "length": [
+        "209:210",
+        0
+      ],
+      "batch_size": 1
+    },
+    "class_type": "EmptyLTXVLatentVideo",
+    "_meta": {
+      "title": "EmptyLTXVLatentVideo"
+    }
+  },
+  "209:213": {
+    "inputs": {
+      "strength": 0.6,
+      "bypass": false,
+      "vae": [
+        "174",
+        0
+      ],
+      "image": [
+        "209:212",
+        0
+      ],
+      "latent": [
+        "209:204",
+        0
+      ]
+    },
+    "class_type": "LTXVImgToVideoInplace",
+    "_meta": {
+      "title": "LTXVImgToVideoInplace"
+    }
+  },
+  "209:109": {
     "inputs": {
       "video_latent": [
-        "209:154",
+        "209:213",
         0
       ],
       "audio_latent": [
-        "209:116",
-        1
+        "209:214",
+        0
       ]
     },
     "class_type": "LTXVConcatAVLatent",
@@ -367,128 +500,56 @@
       "title": "ÉchantillonneurPersonnaliséAvancé"
     }
   },
-  "209:109": {
+  "209:116": {
     "inputs": {
-      "video_latent": [
-        "209:213",
-        0
-      ],
-      "audio_latent": [
-        "209:214",
+      "av_latent": [
+        "209:172",
         0
       ]
     },
-    "class_type": "LTXVConcatAVLatent",
+    "class_type": "LTXVSeparateAVLatent",
     "_meta": {
-      "title": "Concaténation AV Latent LTXV"
+      "title": "LTXVSeparateAVLatent"
     }
   },
-  "209:136": {
+  "209:118": {
     "inputs": {
-      "sampler_name": "euler_ancestral"
-    },
-    "class_type": "KSamplerSelect",
-    "_meta": {
-      "title": "KSamplerSelect"
-    }
-  },
-  "209:103": {
-    "inputs": {
-      "cfg": 1,
-      "model": [
-        "209:601",
+      "samples": [
+        "209:116",
         0
       ],
+      "upscale_model": [
+        "101",
+        0
+      ],
+      "vae": [
+        "174",
+        0
+      ]
+    },
+    "class_type": "LTXVLatentUpsampler",
+    "_meta": {
+      "title": "spatial"
+    }
+  },
+  "209:369": {
+    "inputs": {
       "positive": [
-        "209:369",
+        "209:201",
         0
       ],
       "negative": [
-        "209:369",
-        1
-      ]
-    },
-    "class_type": "CFGGuider",
-    "_meta": {
-      "title": "GuideCFG"
-    }
-  },
-  "209:214": {
-    "inputs": {
-      "frames_number": [
-        "209:210",
-        0
-      ],
-      "frame_rate": 24,
-      "batch_size": 1,
-      "audio_vae": [
-        "175",
-        0
-      ]
-    },
-    "class_type": "LTXVEmptyLatentAudio",
-    "_meta": {
-      "title": "Audio latent vide LTXV"
-    }
-  },
-  "209:206": {
-    "inputs": {
-      "image": [
-        "209:205",
-        0
-      ]
-    },
-    "class_type": "GetImageSize",
-    "_meta": {
-      "title": "Obtenir la taille de l'image"
-    }
-  },
-  "209:205": {
-    "inputs": {
-      "upscale_method": "lanczos",
-      "scale_by": 0.5,
-      "image": [
-        "209:209",
-        0
-      ]
-    },
-    "class_type": "ImageScaleBy",
-    "_meta": {
-      "title": "Agrandir l'image par"
-    }
-  },
-  "209:204": {
-    "inputs": {
-      "width": [
-        "209:206",
-        0
-      ],
-      "height": [
-        "209:206",
+        "209:201",
         1
       ],
-      "length": [
-        "209:210",
-        0
-      ],
-      "batch_size": 1
-    },
-    "class_type": "EmptyLTXVLatentVideo",
-    "_meta": {
-      "title": "EmptyLTXVLatentVideo"
-    }
-  },
-  "209:211": {
-    "inputs": {
-      "longer_edge": 896,
-      "images": [
-        "149",
+      "latent": [
+        "209:116",
         0
       ]
     },
-    "class_type": "ResizeImagesByLongerEdge",
+    "class_type": "LTXVCropGuides",
     "_meta": {
-      "title": "Redimensionner les images par le bord le plus long"
+      "title": "LTXVCropGuides"
     }
   },
   "209:154": {
@@ -513,26 +574,69 @@
       "title": "LTXVImgToVideoInplace"
     }
   },
-  "209:213": {
+  "209:103": {
     "inputs": {
-      "strength": 0.6,
-      "bypass": false,
-      "vae": [
-        "174",
+      "cfg": 1,
+      "model": [
+        "209:601",
         0
       ],
-      "image": [
-        "209:212",
+      "positive": [
+        "209:369",
         0
       ],
-      "latent": [
-        "209:204",
+      "negative": [
+        "209:369",
+        1
+      ]
+    },
+    "class_type": "CFGGuider",
+    "_meta": {
+      "title": "GuideCFG"
+    }
+  },
+  "209:117": {
+    "inputs": {
+      "video_latent": [
+        "209:154",
+        0
+      ],
+      "audio_latent": [
+        "209:116",
+        1
+      ]
+    },
+    "class_type": "LTXVConcatAVLatent",
+    "_meta": {
+      "title": "Concaténation AV Latent LTXV"
+    }
+  },
+  "209:119": {
+    "inputs": {
+      "noise": [
+        "115",
+        0
+      ],
+      "guider": [
+        "209:103",
+        0
+      ],
+      "sampler": [
+        "209:136",
+        0
+      ],
+      "sigmas": [
+        "209:100",
+        0
+      ],
+      "latent_image": [
+        "209:117",
         0
       ]
     },
-    "class_type": "LTXVImgToVideoInplace",
+    "class_type": "SamplerCustomAdvanced",
     "_meta": {
-      "title": "LTXVImgToVideoInplace"
+      "title": "ÉchantillonneurPersonnaliséAvancé"
     }
   },
   "209:124": {
@@ -545,196 +649,6 @@
     "class_type": "LTXVSeparateAVLatent",
     "_meta": {
       "title": "LTXVSeparateAVLatent"
-    }
-  },
-  "209:212": {
-    "inputs": {
-      "img_compression": 0,
-      "image": [
-        "209:211",
-        0
-      ]
-    },
-    "class_type": "LTXVPreprocess",
-    "_meta": {
-      "title": "LTXVPreprocess"
-    }
-  },
-  "209:207": {
-    "inputs": {
-      "longer_edge": [
-        "199",
-        0
-      ],
-      "images": [
-        "149",
-        0
-      ]
-    },
-    "class_type": "ResizeImagesByLongerEdge",
-    "_meta": {
-      "title": "Redimensionner les images par le bord le plus long"
-    }
-  },
-  "209:208": {
-    "inputs": {
-      "image": [
-        "209:207",
-        0
-      ]
-    },
-    "class_type": "GetImageSize",
-    "_meta": {
-      "title": "Obtenir la taille de l'image"
-    }
-  },
-  "209:209": {
-    "inputs": {
-      "width": [
-        "209:208",
-        0
-      ],
-      "height": [
-        "209:208",
-        1
-      ],
-      "batch_size": 1,
-      "color": 0
-    },
-    "class_type": "EmptyImage",
-    "_meta": {
-      "title": "ImageVide"
-    }
-  },
-  "209:210": {
-    "inputs": {
-      "expression": "a*24+1",
-      "a": [
-        "196",
-        0
-      ]
-    },
-    "class_type": "MathExpression|pysssss",
-    "_meta": {
-      "title": "Math Expression 🐍"
-    }
-  },
-  "209:127": {
-    "inputs": {
-      "samples": [
-        "209:124",
-        1
-      ],
-      "audio_vae": [
-        "175",
-        0
-      ]
-    },
-    "class_type": "LTXVAudioVAEDecode",
-    "_meta": {
-      "title": "Décodage Audio VAE LTXV"
-    }
-  },
-  "209:201": {
-    "inputs": {
-      "frame_rate": 24,
-      "positive": [
-        "121",
-        0
-      ],
-      "negative": [
-        "593",
-        0
-      ]
-    },
-    "class_type": "LTXVConditioning",
-    "_meta": {
-      "title": "LTXVConditioning"
-    }
-  },
-  "209:128": {
-    "inputs": {
-      "cfg": 1,
-      "model": [
-        "209:601",
-        0
-      ],
-      "positive": [
-        "209:201",
-        0
-      ],
-      "negative": [
-        "209:201",
-        1
-      ]
-    },
-    "class_type": "CFGGuider",
-    "_meta": {
-      "title": "GuideCFG"
-    }
-  },
-  "209:118": {
-    "inputs": {
-      "samples": [
-        "209:116",
-        0
-      ],
-      "upscale_model": [
-        "101",
-        0
-      ],
-      "vae": [
-        "174",
-        0
-      ]
-    },
-    "class_type": "LTXVLatentUpsampler",
-    "_meta": {
-      "title": "spatial"
-    }
-  },
-  "209:116": {
-    "inputs": {
-      "av_latent": [
-        "209:172",
-        0
-      ]
-    },
-    "class_type": "LTXVSeparateAVLatent",
-    "_meta": {
-      "title": "LTXVSeparateAVLatent"
-    }
-  },
-  "209:369": {
-    "inputs": {
-      "positive": [
-        "209:201",
-        0
-      ],
-      "negative": [
-        "209:201",
-        1
-      ],
-      "latent": [
-        "209:116",
-        0
-      ]
-    },
-    "class_type": "LTXVCropGuides",
-    "_meta": {
-      "title": "LTXVCropGuides"
-    }
-  },
-  "209:218": {
-    "inputs": {
-      "images": [
-        "209:126",
-        0
-      ]
-    },
-    "class_type": "FinalFrameSelector",
-    "_meta": {
-      "title": "Final Frame Selector"
     }
   },
   "209:126": {
@@ -757,21 +671,20 @@
       "title": "VAE Decode (Tiled)"
     }
   },
-  "209:601": {
+  "209:127": {
     "inputs": {
-      "preview_rate": 8,
-      "model": [
-        "211",
-        0
+      "samples": [
+        "209:124",
+        1
       ],
-      "vae": [
-        "591",
+      "audio_vae": [
+        "175",
         0
       ]
     },
-    "class_type": "LTX2SamplingPreviewOverride",
+    "class_type": "LTXVAudioVAEDecode",
     "_meta": {
-      "title": "LTX2 Sampling Preview Override"
+      "title": "Décodage Audio VAE LTXV"
     }
   }
 }
