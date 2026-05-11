@@ -24,6 +24,8 @@ INPUT_IMAGES_DIR = Path(r"D:\Home\images_a_animer")
 
 FINAL_OUTPUT_DIR = Path(r"D:\Home\final_videos")
 
+PROMPT_INPUT_DIR = FINAL_OUTPUT_DIR / "ltx23_prompts"
+
 PERF_LOG_PATH = FINAL_OUTPUT_DIR / "batch_ltx23_perf.csv"
 
 # Slower per image, but useful if ComfyUI becomes inconsistent over long runs.
@@ -31,6 +33,8 @@ PERF_LOG_PATH = FINAL_OUTPUT_DIR / "batch_ltx23_perf.csv"
 FREE_COMFY_MEMORY_AFTER_EACH_IMAGE = False
 
 GPU_MONITOR_INTERVAL_S = 10
+
+USE_PREPARED_PROMPTS = True
 
 POSITIVE_PROMPT = (
     "Animate this single still image into one continuous shot. Preserve the exact same scene, same people, same clothing, same environment, same composition, and same camera angle."
@@ -44,7 +48,7 @@ PROMPT_VARIANTS = [
 ]
 
 NEGATIVE_PROMPT = (
-    "scene change, cut, transition, different shot, different location, different person, extra person, subject replacement, face change, body change, clothing change, gender swap, age change, warping, morphing, hallucinated background, new objects, new characters, strong motion, camera shake, flicker, jitter, blur, low quality, watermark, subtitles, overlay, text"
+    "scene change, cut, transition, different shot, different location, different person, extra person, subject replacement, face change, identity change, body change, pose replacement, clothing change, gender swap, age change, object deformation, product deformation, logo change, text change, unreadable text, warping, morphing, melting, hallucinated background, new objects, new characters, strong motion, camera shake, flicker, jitter, blur, low quality, watermark, subtitles, overlay, text"
 )
 
 VIDEO_SECONDS = 2
@@ -345,7 +349,45 @@ def find_existing_variant_output(base_name: str, variant_index: int):
 
     return None
 
-def process_variant(image_path, comfy_name, workflow_template, variant_index):
+def prepared_prompt_path(image_path: Path) -> Path:
+    return PROMPT_INPUT_DIR / f"{image_path.stem}.json"
+
+def load_prepared_prompt_profile(image_path: Path):
+    if not USE_PREPARED_PROMPTS:
+        return None
+
+    path = prepared_prompt_path(image_path)
+    if not path.exists():
+        return None
+
+    with open(path, "r", encoding="utf-8") as f:
+        return json.load(f)
+
+def select_prompt_for_variant(prompt_profile, variant_index: int) -> str:
+    if not prompt_profile:
+        return POSITIVE_PROMPT + " " + random.choice(PROMPT_VARIANTS)
+
+    variants = prompt_profile.get("prompt_variants")
+    if isinstance(variants, list) and variants:
+        prompt = variants[(variant_index - 1) % len(variants)]
+        if isinstance(prompt, str) and prompt.strip():
+            return prompt.strip()
+
+    prompt = prompt_profile.get("prompt")
+    if isinstance(prompt, str) and prompt.strip():
+        return prompt.strip()
+
+    return POSITIVE_PROMPT + " " + random.choice(PROMPT_VARIANTS)
+
+def select_negative_prompt(prompt_profile) -> str:
+    if prompt_profile:
+        prompt = prompt_profile.get("negative_prompt")
+        if isinstance(prompt, str) and prompt.strip():
+            return prompt.strip()
+
+    return NEGATIVE_PROMPT
+
+def process_variant(image_path, comfy_name, workflow_template, variant_index, prompt_profile=None):
 
     started_at = time.monotonic()
     gpu_before = get_gpu_snapshot()
@@ -359,9 +401,12 @@ def process_variant(image_path, comfy_name, workflow_template, variant_index):
     seed = random.randint(1, 10_000_000)
     strength = round(random.uniform(0.5, 0.62), 3)
 
-    prompt = POSITIVE_PROMPT + " " + random.choice(PROMPT_VARIANTS)
+    prompt = select_prompt_for_variant(prompt_profile, variant_index)
+    negative_prompt = select_negative_prompt(prompt_profile)
 
     print(f"  variant {variant_index}: seed={seed} | strength={strength}")
+    if prompt_profile:
+        print(f"    prompt profile: {prompt_profile.get('image_type', 'unknown')} | {prepared_prompt_path(image_path).name}")
 
     workflow = prepare_workflow_for_image(
         workflow_template,
@@ -371,6 +416,7 @@ def process_variant(image_path, comfy_name, workflow_template, variant_index):
         strength,
         prompt
     )
+    workflow["593"]["inputs"]["text"] = negative_prompt
 
     try:
         prompt_id = queue_prompt(workflow)
@@ -473,10 +519,16 @@ def process_image(image_path, workflow_template, image_index, total_images):
         print("  all variants already done")
         return
 
+    prompt_profile = load_prepared_prompt_profile(image_path)
+    if prompt_profile:
+        print(f"  prepared prompt: {prepared_prompt_path(image_path).name} ({prompt_profile.get('image_type', 'unknown')})")
+    elif USE_PREPARED_PROMPTS:
+        print("  prepared prompt: not found, using generic prompt variants")
+
     comfy_name = copy_image_to_comfy_input(image_path)
 
     for variant_index in pending_variants:
-        process_variant(image_path, comfy_name, workflow_template, variant_index)
+        process_variant(image_path, comfy_name, workflow_template, variant_index, prompt_profile)
 
 def main():
 

@@ -10,26 +10,11 @@
   },
   "2": {
     "inputs": {
-      "noise": [
-        "4",
-        0
-      ],
-      "guider": [
-        "16",
-        0
-      ],
-      "sampler": [
-        "1",
-        0
-      ],
-      "sigmas": [
-        "17",
-        0
-      ],
-      "latent_image": [
-        "8",
-        0
-      ]
+      "noise": ["4", 0],
+      "guider": ["16", 0],
+      "sampler": ["1", 0],
+      "sigmas": ["17", 0],
+      "latent_image": ["8", 0]
     },
     "class_type": "SamplerCustomAdvanced",
     "_meta": {
@@ -38,14 +23,8 @@
   },
   "3": {
     "inputs": {
-      "samples": [
-        "2",
-        0
-      ],
-      "vae": [
-        "6",
-        0
-      ]
+      "samples": ["2", 0],
+      "vae": ["6", 0]
     },
     "class_type": "VAEDecode",
     "_meta": {
@@ -72,14 +51,8 @@
   },
   "8": {
     "inputs": {
-      "width": [
-        "31",
-        0
-      ],
-      "height": [
-        "31",
-        1
-      ],
+      "width": ["31", 0],
+      "height": ["31", 1],
       "batch_size": 1
     },
     "class_type": "EmptyFlux2LatentImage",
@@ -101,10 +74,7 @@
   "14": {
     "inputs": {
       "text": "ghibli, richer colors, stronger contrast, natural skin tones, more vivid colors, flat cel shading, flat color areas, crisp shadow shapes, simplified shading",
-      "clip": [
-        "12",
-        0
-      ]
+      "clip": ["12", 0]
     },
     "class_type": "CLIPTextEncode",
     "_meta": {
@@ -114,10 +84,7 @@
   "15": {
     "inputs": {
       "text": "washed out, faded colors, flat lighting, smooth gradients, painterly shading, airbrushed shading, soft blended shadows",
-      "clip": [
-        "12",
-        0
-      ]
+      "clip": ["12", 0]
     },
     "class_type": "CLIPTextEncode",
     "_meta": {
@@ -127,18 +94,9 @@
   "16": {
     "inputs": {
       "cfg": 1,
-      "model": [
-        "47",
-        0
-      ],
-      "positive": [
-        "23",
-        0
-      ],
-      "negative": [
-        "21",
-        0
-      ]
+      "model": ["47", 0],
+      "positive": ["23", 0],
+      "negative": ["21", 0]
     },
     "class_type": "CFGGuider",
     "_meta": {
@@ -148,14 +106,8 @@
   "17": {
     "inputs": {
       "steps": 4,
-      "width": [
-        "31",
-        0
-      ],
-      "height": [
-        "31",
-        1
-      ]
+      "width": ["31", 0],
+      "height": ["31", 1]
     },
     "class_type": "Flux2Scheduler",
     "_meta": {
@@ -173,14 +125,8 @@
   },
   "21": {
     "inputs": {
-      "conditioning": [
-        "15",
-        0
-      ],
-      "latent": [
-        "22",
-        0
-      ]
+      "conditioning": ["15", 0],
+      "latent": ["22", 0]
     },
     "class_type": "ReferenceLatent",
     "_meta": {
@@ -189,14 +135,8 @@
   },
   "22": {
     "inputs": {
-      "pixels": [
-        "29",
-        0
-      ],
-      "vae": [
-        "48",
-        0
-      ]
+      "pixels": ["29", 0],
+      "vae": ["48", 0]
     },
     "class_type": "VAEEncode",
     "_meta": {
@@ -205,14 +145,8 @@
   },
   "23": {
     "inputs": {
-      "conditioning": [
-        "14",
-        0
-      ],
-      "latent": [
-        "22",
-        0
-      ]
+      "conditioning": ["14", 0],
+      "latent": ["22", 0]
     },
     "class_type": "ReferenceLatent",
     "_meta": {
@@ -224,10 +158,7 @@
       "upscale_method": "lanczos",
       "megapixels": 1.5,
       "resolution_steps": 1,
-      "image": [
-        "19",
-        0
-      ]
+      "image": ["19", 0]
     },
     "class_type": "ImageScaleToTotalPixels",
     "_meta": {
@@ -236,10 +167,7 @@
   },
   "31": {
     "inputs": {
-      "image": [
-        "29",
-        0
-      ]
+      "image": ["29", 0]
     },
     "class_type": "easy imageSize",
     "_meta": {
@@ -267,10 +195,7 @@
   "51": {
     "inputs": {
       "filename_prefix": "flux2_klein_4mp_",
-      "images": [
-        "3",
-        0
-      ]
+      "images": ["3", 0]
     },
     "class_type": "SaveImage",
     "_meta": {
