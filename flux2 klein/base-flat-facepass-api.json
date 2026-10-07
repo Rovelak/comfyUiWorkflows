@@ -1,0 +1,338 @@
+{
+  "1": {
+    "inputs": {
+      "sampler_name": "euler"
+    },
+    "class_type": "KSamplerSelect",
+    "_meta": {
+      "title": "KSamplerSelect"
+    }
+  },
+  "2": {
+    "inputs": {
+      "noise": ["4", 0],
+      "guider": ["16", 0],
+      "sampler": ["1", 0],
+      "sigmas": ["17", 0],
+      "latent_image": ["8", 0]
+    },
+    "class_type": "SamplerCustomAdvanced",
+    "_meta": {
+      "title": "Main Flux2 Klein sampler"
+    }
+  },
+  "3": {
+    "inputs": {
+      "samples": ["2", 0],
+      "vae": ["6", 0]
+    },
+    "class_type": "VAEDecode",
+    "_meta": {
+      "title": "Decode main image"
+    }
+  },
+  "4": {
+    "inputs": {
+      "noise_seed": 611607337581220
+    },
+    "class_type": "RandomNoise",
+    "_meta": {
+      "title": "Main seed"
+    }
+  },
+  "6": {
+    "inputs": {
+      "vae_name": "flux2-vae.safetensors"
+    },
+    "class_type": "VAELoader",
+    "_meta": {
+      "title": "Flux2 VAE"
+    }
+  },
+  "8": {
+    "inputs": {
+      "width": ["31", 0],
+      "height": ["31", 1],
+      "batch_size": 1
+    },
+    "class_type": "EmptyFlux2LatentImage",
+    "_meta": {
+      "title": "Empty Flux2 latent"
+    }
+  },
+  "12": {
+    "inputs": {
+      "clip_name": "qwen_3_4b.safetensors",
+      "type": "flux2",
+      "device": "default"
+    },
+    "class_type": "CLIPLoader",
+    "_meta": {
+      "title": "Flux2 CLIP"
+    }
+  },
+  "14": {
+    "inputs": {
+      "text": "ghibli, richer colors, stronger contrast, natural skin tones, more vivid colors, flat cel shading, broad flat color areas, crisp shadow shapes, simplified shading, clean simple shapes, minimal texture, uncluttered background",
+      "clip": ["12", 0]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "CLIP Text Encode (Positive Prompt)"
+    }
+  },
+  "15": {
+    "inputs": {
+      "text": "washed out, faded colors, flat lighting, smooth gradients, painterly shading, airbrushed shading, soft blended shadows, micro details, excessive texture, fabric weave, busy background, intricate patterns, over-rendered, realistic skin texture, pores",
+      "clip": ["12", 0]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "CLIP Text Encode ( Negative Prompt)"
+    }
+  },
+  "16": {
+    "inputs": {
+      "cfg": 1,
+      "model": ["47", 0],
+      "positive": ["23", 0],
+      "negative": ["21", 0]
+    },
+    "class_type": "CFGGuider",
+    "_meta": {
+      "title": "Main CFG guider"
+    }
+  },
+  "17": {
+    "inputs": {
+      "steps": 4,
+      "width": ["31", 0],
+      "height": ["31", 1]
+    },
+    "class_type": "Flux2Scheduler",
+    "_meta": {
+      "title": "Main Flux2 scheduler"
+    }
+  },
+  "19": {
+    "inputs": {
+      "image": "20250611_030236_Fuji_3.jpg"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "Load source image"
+    }
+  },
+  "21": {
+    "inputs": {
+      "conditioning": ["15", 0],
+      "latent": ["22", 0]
+    },
+    "class_type": "ReferenceLatent",
+    "_meta": {
+      "title": "Main negative reference latent"
+    }
+  },
+  "22": {
+    "inputs": {
+      "pixels": ["29", 0],
+      "vae": ["48", 0]
+    },
+    "class_type": "VAEEncode",
+    "_meta": {
+      "title": "Encode source reference"
+    }
+  },
+  "23": {
+    "inputs": {
+      "conditioning": ["14", 0],
+      "latent": ["22", 0]
+    },
+    "class_type": "ReferenceLatent",
+    "_meta": {
+      "title": "Main positive reference latent"
+    }
+  },
+  "29": {
+    "inputs": {
+      "upscale_method": "lanczos",
+      "megapixels": 2.5,
+      "resolution_steps": 1,
+      "image": ["19", 0]
+    },
+    "class_type": "ImageScaleToTotalPixels",
+    "_meta": {
+      "title": "Resize image to 2.5MP before latent"
+    }
+  },
+  "31": {
+    "inputs": {
+      "image": ["29", 0]
+    },
+    "class_type": "easy imageSize",
+    "_meta": {
+      "title": "ImageSize"
+    }
+  },
+  "47": {
+    "inputs": {
+      "unet_name": "flux-2-klein-4b-Q4_K_M.gguf"
+    },
+    "class_type": "UnetLoaderGGUF",
+    "_meta": {
+      "title": "Flux2 Klein GGUF"
+    }
+  },
+  "48": {
+    "inputs": {
+      "vae_name": "flux2-vae.safetensors"
+    },
+    "class_type": "VAELoader",
+    "_meta": {
+      "title": "Flux2 VAE for source encode"
+    }
+  },
+  "51": {
+    "inputs": {
+      "filename_prefix": "flux2_klein_facepass_",
+      "images": ["59", 1]
+    },
+    "class_type": "SaveImage",
+    "_meta": {
+      "title": "Save face-detail final image"
+    }
+  },
+  "52": {
+    "inputs": {
+      "text": "clear expressive face, refined eyes, clean facial features, natural skin tones, crisp eyes, simple anime face, subtle detail, clean cel shading, coherent mouth, balanced eyebrows",
+      "clip": ["12", 0]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "Face detail positive prompt"
+    }
+  },
+  "53": {
+    "inputs": {
+      "text": "pores, wrinkles, realistic skin texture, over-detailed skin, noisy face, uncanny eyes, asymmetrical eyes, harsh lines, muddy features, deformed face, distorted mouth, extra teeth, cross eyed",
+      "clip": ["12", 0]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "Face detail negative prompt"
+    }
+  },
+  "54": {
+    "inputs": {
+      "pixels": ["3", 0],
+      "vae": ["6", 0]
+    },
+    "class_type": "VAEEncode",
+    "_meta": {
+      "title": "Encode generated image for face pass"
+    }
+  },
+  "55": {
+    "inputs": {
+      "conditioning": ["52", 0],
+      "latent": ["54", 0]
+    },
+    "class_type": "ReferenceLatent",
+    "_meta": {
+      "title": "Face positive reference latent"
+    }
+  },
+  "56": {
+    "inputs": {
+      "conditioning": ["53", 0],
+      "latent": ["54", 0]
+    },
+    "class_type": "ReferenceLatent",
+    "_meta": {
+      "title": "Face negative reference latent"
+    }
+  },
+  "57": {
+    "inputs": {
+      "model_name": "bbox/face_yolov8m.pt",
+      "bbox_threshold": 0.45,
+      "bbox_dilation": 16,
+      "bbox_crop_factor": 3
+    },
+    "class_type": "easy ultralyticsDetectorPipe",
+    "_meta": {
+      "title": "Face bbox detector pipe"
+    }
+  },
+  "58": {
+    "inputs": {
+      "pipe": ["60", 0],
+      "guide_size": 768,
+      "guide_size_for": true,
+      "max_size": 1024,
+      "seed": 611607337581221,
+      "steps": 6,
+      "cfg": 1,
+      "sampler_name": "euler",
+      "scheduler": "simple",
+      "denoise": 0.3,
+      "feather": 32,
+      "noise_mask": true,
+      "force_inpaint": true,
+      "drop_size": 32,
+      "wildcard": "",
+      "cycle": 1,
+      "bbox_segm_pipe": ["57", 0],
+      "sam_pipe": ["61", 0],
+      "optional_image": ["3", 0]
+    },
+    "class_type": "easy preDetailerFix",
+    "_meta": {
+      "title": "Prepare face detail pass"
+    }
+  },
+  "59": {
+    "inputs": {
+      "pipe": ["58", 0],
+      "image_output": "Hide",
+      "link_id": 0,
+      "save_prefix": "flux2_klein_facepass_preview",
+      "model": ["47", 0]
+    },
+    "class_type": "easy detailerFix",
+    "_meta": {
+      "title": "Apply face detail pass"
+    }
+  },
+  "60": {
+    "inputs": {
+      "model": ["47", 0],
+      "pos": ["55", 0],
+      "neg": ["56", 0],
+      "latent": ["54", 0],
+      "vae": ["6", 0],
+      "clip": ["12", 0],
+      "image": ["3", 0]
+    },
+    "class_type": "easy pipeIn",
+    "_meta": {
+      "title": "Pipe for face detailer"
+    }
+  },
+  "61": {
+    "inputs": {
+      "model_name": "sam_vit_b_01ec64.pth",
+      "device_mode": "AUTO",
+      "sam_detection_hint": "center-1",
+      "sam_dilation": 0,
+      "sam_threshold": 0.93,
+      "sam_bbox_expansion": 8,
+      "sam_mask_hint_threshold": 0.7,
+      "sam_mask_hint_use_negative": "False"
+    },
+    "class_type": "easy samLoaderPipe",
+    "_meta": {
+      "title": "SAM pipe for face masks"
+    }
+  }
+}
